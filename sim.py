@@ -19,7 +19,7 @@ def tryInt(x):
     except:
         return str(x)
 
-f = open('a.txt', 'r')
+f = open('input_files/b.txt', 'r')
 l = [[tryInt(y) for y in x.split()] for x in f.readlines()]
 [D, I, S, V, F] = l[0]
 for line in l[1:S+1]:
@@ -34,7 +34,7 @@ for line in l[S+1:S+1+V]:
     path = line[1:]
     streets[path[0]].queue.append(Car(path))
 
-f = open('a.txt.out', 'r')
+f = open('output_files/b.txt.out', 'r')
 l = [[tryInt(y) for y in x.split()] for x in f.readlines()]
 numIntersections = l.pop(0)[0]
 for i in range(numIntersections):
@@ -47,9 +47,7 @@ for i in range(numIntersections):
             # first street in schedule at intersection
             streets[streetName].timeLeft = timeGreen
 
-print(streets)
-
-for i in range(D): # for each time step
+for timeStep in range(D): # for each time step
     # configure lights (timeLeft)
     for i in intersections.values():
         for sInd in range(len(i)):
@@ -63,8 +61,9 @@ for i in range(D): # for each time step
 
     for streetName in streets.keys():
         s = streets[streetName]
-        for cInd in range(len(s.queue)):
-            c = s.queue[cInd]
+        queueCopy = [x for x in s.queue]
+        for cInd in range(len(queueCopy)):
+            c = queueCopy[cInd]
             if(s.timeLeft > 0 and s.queue[0].distanceLeft == 0):
                 if(len(c.path) > 1):
                     # move car to next street
@@ -74,8 +73,9 @@ for i in range(D): # for each time step
                     c.path.pop(0)
                     c.distanceLeft = nextStreet.len
                 else:
-                    # remove cat (it's done)
-                    s.queue.remove(c)
+                    # remove car (it's done)
+                    s.queue.remove(c) # todo: should remove at start of last street
+                    print("removing car at time:", timeStep)
             if(c.distanceLeft > 0):
                 # move car along
                 c.distanceLeft -= 1
