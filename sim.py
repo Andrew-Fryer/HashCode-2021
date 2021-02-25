@@ -19,7 +19,7 @@ def tryInt(x):
     except:
         return str(x)
 
-f = open('input_files/b.txt', 'r')
+f = open('input_files/a.txt', 'r')
 l = [[tryInt(y) for y in x.split()] for x in f.readlines()]
 [D, I, S, V, F] = l[0]
 for line in l[1:S+1]:
@@ -34,7 +34,7 @@ for line in l[S+1:S+1+V]:
     path = line[1:]
     streets[path[0]].queue.append(Car(path))
 
-f = open('output_files/b.txt.out', 'r')
+f = open('output_files/a.txt.out', 'r')
 l = [[tryInt(y) for y in x.split()] for x in f.readlines()]
 numIntersections = l.pop(0)[0]
 for i in range(numIntersections):
@@ -47,6 +47,7 @@ for i in range(numIntersections):
             # first street in schedule at intersection
             streets[streetName].timeLeft = timeGreen
 
+score = 0
 for timeStep in range(D): # for each time step
     # configure lights (timeLeft)
     for i in intersections.values():
@@ -75,7 +76,9 @@ for timeStep in range(D): # for each time step
                 else:
                     # remove car (it's done)
                     s.queue.remove(c) # todo: should remove at start of last street
-                    print("removing car at time:", timeStep)
+                    score += F + (D - timeStep)
             if(c.distanceLeft > 0):
                 # move car along
                 c.distanceLeft -= 1
+
+print(score)
