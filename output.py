@@ -1,7 +1,7 @@
 
 class Solution:
     def __init__(self, file_name):
-        self.f = open(file_name, "a+")
+        self.f = open(file_name, "w+")
 
     def add_intersection(self, intersection, number_of_streets_green, street_names, street_times):
         self.f.write(intersection)
