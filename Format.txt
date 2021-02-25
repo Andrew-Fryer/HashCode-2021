@@ -1,0 +1,19 @@
+Objects: Cars, Lights, Streets, Paths
+
+CARS: 
+Location - street and time
+Full path 
+
+Intersection:
+State red vs green 
+Countdown Timer for Green on each light/ street connection 
+Length of time 
+connected street objects
+
+Street:
+Queue that holds cars
+Time to travel down street
+Connected lights objects
+
+Score: 
+Store the score at each step in the process
